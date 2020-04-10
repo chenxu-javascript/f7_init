@@ -1,5 +1,5 @@
 import Vue from "vue";
-export var bsToast = function(msg, closeTimeout = 3000, position = "center") {
+export const bsToast = function(msg, closeTimeout = 3000, position = "center") {
   if (window.$vm.$f7 && window.$vm.$f7.toast) {
     window.$vm.$f7.toast.show({
       text: msg,
@@ -12,7 +12,7 @@ export var bsToast = function(msg, closeTimeout = 3000, position = "center") {
 };
 
 let bsTipModal = null;
-export var bsTip = function(msg, title = "") {
+export const bsTip = function(msg, title = "") {
   if (window.$vm && window.$vm.$f7) {
     if (bsTipModal) {
       return;
@@ -29,7 +29,7 @@ export var bsTip = function(msg, title = "") {
   }
 };
 
-export var bsPromise = function(data, time) {
+export const bsPromise = function(data, time) {
   return new Promise(function(resolve) {
     if (time) {
       setTimeout(function() {
@@ -40,11 +40,11 @@ export var bsPromise = function(data, time) {
     }
   });
 };
-export var bsWait = function(time) {
+export const bsWait = function(time) {
   return bsPromise({}, time);
 };
 
-export var bsConfirm = function(msg, options = {}) {
+export const bsConfirm = function(msg, options = {}) {
   if (window.$vm && window.$vm.$f7) {
     return new Promise(function(resolve, reject) {
       let { modalButtonOk, title = "" } = options;
@@ -59,22 +59,17 @@ export var bsConfirm = function(msg, options = {}) {
   return bsPromise();
 };
 
-export var bsRunWhen = function(fn, cod, name) {
-  name = name || "";
+export const bsRunWhen = function(fn, cod) {
   if (cod()) {
     fn();
     return;
   }
 
-  var i = 0;
-  var interval = setInterval(function() {
+  let i = 0;
+  const interval = setInterval(function() {
     i++;
     if (i > 500) {
       clearInterval(interval);
-      /* eslint-disable */
-      if (window.ZBJConfig.isDev) {
-        console.log(name, ":", "bsRunwhern timeout");
-      }
     } else if (cod()) {
       fn();
       clearInterval(interval);
@@ -82,23 +77,23 @@ export var bsRunWhen = function(fn, cod, name) {
   }, 30);
 };
 
-export var bsCheck = function(cod) {
+export const bsCheck = function(cod) {
   return new Promise(function(resolve, reject) {
     bsRunWhen(resolve, cod, "bsCheck", reject);
   });
 };
 
-export var bsHtmlDecode = function(text) {
-  var temp = document.createElement("div");
+export const bsHtmlDecode = function(text) {
+  let temp = document.createElement("div");
   temp.innerHTML = text;
-  var output = temp.innerText || temp.textContent;
+  const output = temp.innerText || temp.textContent;
   temp = null;
   return output;
 };
 
-export var bsHtmlEncode = function(value) {
-  var div = document.createElement("div");
-  var text = document.createTextNode(value);
+export const bsHtmlEncode = function(value) {
+  const div = document.createElement("div");
+  const text = document.createTextNode(value);
   div.appendChild(text);
   return div.innerHTML;
 };
@@ -118,10 +113,10 @@ export function debounce(func, delay) {
 
 export const bsSetupRem = function() {
   try {
-    var docEl = document.documentElement,
+    const docEl = document.documentElement,
       resizeEvt = "orientationchange" in window ? "orientationchange" : "resize",
       recalc = function() {
-        var clientWidth = docEl.clientWidth;
+        const clientWidth = docEl.clientWidth;
         if (!clientWidth) return;
         if (clientWidth >= 750) {
           docEl.style.fontSize = "100px";
@@ -139,10 +134,7 @@ export const bsSetupRem = function() {
   }
 };
 
-let throwIfMissing = (param, tip = "") => {
-  throw new Error(`${param} 为必须! ${tip}`);
-};
-var Utils = {
+const Utils = {
   bsTip,
   bsPromise,
   bsWait,
