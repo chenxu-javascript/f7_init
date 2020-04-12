@@ -1,9 +1,8 @@
 import Vue from "vue";
 import Framework7 from "framework7/framework7.esm.bundle";
-import Framework7Vue from "framework7-vue";
+import Framework7Vue from "framework7-vue/framework7-vue.esm.bundle";
 import App from "./App.vue";
 import store from "./store";
-
 
 import "./styles/index.less";
 
